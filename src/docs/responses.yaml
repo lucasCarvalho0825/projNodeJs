@@ -12,12 +12,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+
     Unauthorized:
       description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    
+    Successful:
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
 
             
   schemas:
