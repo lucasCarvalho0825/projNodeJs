@@ -16,13 +16,13 @@ MySQL.$use(async ( params, next) => {
 /**
  * método create, adiciona um novo registro de evento ao banco de dados.
  */
-export async function create (data) {
+export async function create (id, data) {
 
     const { title, startDate, finalDate, description, address } = data;
 
     const res =  await MySQL.event.create({
         data : {
-            title, startDate, finalDate, description, 
+            title, startDate, finalDate, description, idUser: id,
             address : {
                 create : {
                     ...address

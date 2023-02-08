@@ -43,8 +43,9 @@ import { create, findMany, findManyMe, findUnique} from "./event_Repository.js";
 export async function newEvent( req, res ) {
 
     if( req.user.role !== "MODERATOR") return res.status(401).send({code: 401, message: "Unauthorized"});
+    const id = req.user.id;
 
-    const data = await create( req.body );
+    const data = await create( id, req.body );
     return data ? res.send(data) : res.status(400).send({code: 400, message: "Bad Request"});
 }
 
