@@ -1,0 +1,9 @@
+tags:
+  - name: User
+    description: Nesse seguimento de tag você irá entender e testar todas as rotas referentes ao crud de usuários.
+  - name: Auth
+    description: Nesse seguimento de tag você irá entender e testar todas as rotas referentes a autenticação de usuário.
+  - name: Profile
+    description: Nesse seguimento de tag você irá entender e testar todas as rotas referentes ao crud de perfil do usuário.
+  - name: Event
+    description: Nesse seguimento de tag você irá entender e testar todas as rotas referentes ao crud de eventos.

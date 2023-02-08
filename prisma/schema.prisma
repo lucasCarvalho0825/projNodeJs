@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MODERATOR
+  USER
+}
+
+model User {
+  @@map("users")
+
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  role Role
+
+  profile Profile ?
+  events Event[]
+}
+
+
+model Profile {
+  @@map("profiles")
+
+  id Int @id @default(autoincrement())
+  name String ?
+  bio String ?
+  address Address ?
+
+  idUser Int @unique
+  user User @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate:  NoAction)
+
+}
+
+model Event {
+  @@map("events")
+
+  id Int @id @default(autoincrement())
+  title String
+  startDate DateTime
+  finalDate DateTime
+  description String
+  status Boolean
+  address Address ? 
+
+  idUser Int @unique
+  user User @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Address {
+  @@map("addresses")
+
+  id Int @id @default(autoincrement())
+  street String
+  district String
+  city String
+  state String
+
+  idprofile Int ? @unique
+  profile Profile ? @relation(fields: [idprofile], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  idEvent Int ? @unique
+  event Event ? @relation(fields: [idEvent], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}

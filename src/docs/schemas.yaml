@@ -1,0 +1,152 @@
+components:
+  schemas:
+  
+    User:
+      type: object
+      required:
+        - username
+        - password
+        - role
+       
+      properties:
+        id:
+          type: integer
+          description: Auto-increment per database
+        username:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 6
+        role:
+          type: string
+          $ref: '#/components/schemas/Role'
+      
+      example:
+        username: username@email.com
+        password: testando
+        role: MODERATOR
+
+    Profile:
+      type: object
+      
+      properties:
+        id:
+          type: integer
+          description: Auto-increment per database
+        name:
+          type: string
+          description: Optional value
+        bio:
+          type: string
+          description: Optional value
+        address:
+          type: object
+          $ref: '#/components/schemas/Address'
+
+      example:
+        name: username
+        bio: usuário de teste, os dados informados são meramente ilustrativos
+        address: {
+          street: rua fulano de tal 222,
+          district: fulano,
+          city: curitiba,
+          state: paraná,
+        }
+
+    Event:
+      type: object
+      required:
+        - title
+        - startDate
+        - finalDate
+        - status
+
+      properties:
+        id:
+          type: integer
+          description: Auto-increment per database
+        title:
+          type: string
+        startDate:
+          type: string
+          format: date
+        finalDate:
+          type: string
+          format: date
+        status:
+          type: boolean
+        description:
+          type: string
+        address:
+          type: object
+          $ref: '#/components/schemas/Address'
+
+      example:
+        title: festa de comemoração
+        startDate: 30/01/2023 21-00
+        finalDate: 01/02/2023 05-00
+        status: true
+        description: evento de teste, os dados informados são meramente inlustrativos
+        address: {
+          street: rua fulano de tal 222,
+          district: fulano,
+          city: curitiba,
+          state: paraná,
+        }
+
+    Role:
+      type: string
+      enum:
+        - ADMIN
+        - MODERATOR
+        - SUBSCRIBER
+
+    Credentials:
+      type: object
+      
+      required:
+        - username
+        - password
+      
+      properties:
+        username:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+      
+      example:
+        username: lucascarvalho@email.com
+        password: testando
+
+    Address:
+      type: object
+      required:
+        - street
+        - district
+        - city
+        - state
+
+      properties:
+        id:
+          type: integer
+          description: Auto-increment per database
+        street:
+          type: string
+        district:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+
+  #esquema usado para definir que a api auteticação por token JWT 
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+   
