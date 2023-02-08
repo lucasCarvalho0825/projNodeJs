@@ -13,7 +13,7 @@
 import user from "../components/user/router-user.js"
 import auth from "../components/auth/router-auth.js"
 import profile from "../components/profile/router-profile.js"
-import event from "../components/event/event_Router.js"
+import event from "../components/event/event-Router.js"
 
 
 const routes = (APP) => {
