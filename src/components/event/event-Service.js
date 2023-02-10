@@ -44,16 +44,16 @@ export async function findAll( req, res ) {
 
 /**
  * @openapi
- * /event:
+ * /event/me:
  *   post:
  *     summary: PERMITE AO MODERADOR ATUAL A CRIAR UM NOVO EVENTO 
- *     description: método post que responde na url http://localhost:3000/event  recebe no corpo da requisição as informações do evento e adiciona uma nova estância de evento no banco de dados se a apermissão do usuário for de moderaor
+ *     description: método post que responde na url http://localhost:3000/event/me  recebe no corpo da requisição as informações do evento e adiciona uma nova estância de evento no banco de dados se a apermissão do usuário for de moderaor
  * 
  *     tags: 
  *       - "Event"
  * 
  *     operationId: newEvent
- *     x-eov-operation-handler: event/routes
+ *     x-eov-operation-handler: event/me/routes
  * 
  *     requestBody:
  *       description: Informações de cadastro

@@ -13,9 +13,6 @@ MySQL.$use(async ( params, next) => {
 });
 
 
-/**
- * método create, adiciona um novo registro de evento ao banco de dados.
- */
 export async function create (id, data) {
 
     const { title, startDate, finalDate, description, status, address } = data;
@@ -40,9 +37,6 @@ export async function create (id, data) {
 }
 
 
-/**
- * método update, atualiza as informações de um evento no banco de dados
- */
 export async function update (id, data) {
     const { title, startDate, finalDate, description, address } = data;
 
@@ -68,9 +62,7 @@ export async function update (id, data) {
 }
 
 
-/**
- * método delete, deleta as informações de um evento no banco de dados e por cascata o endereço associado a ele.
- */
+
 export async function deleteMe (id) {
     const data = await MySQL.event.delete({
         where: {
@@ -83,10 +75,6 @@ export async function deleteMe (id) {
 }
 
 
-
-/**
- * método findMany, restaura todas os eventos do banco de dados
- */
 export async function findMany () {
     const res = await MySQL.event.findMany({include: {address:{}}});
 
@@ -102,9 +90,7 @@ export async function findMany () {
     return res;
 }
 
-/**
- * método findMany, restaura todas os eventos do banco de dados de um usuário
- */
+
 export async function findManyMe ( idUser ) {
     const res = await MySQL.event.findMany({
         where: { 
@@ -125,9 +111,7 @@ export async function findManyMe ( idUser ) {
     return res;
 }
 
-/**
- * método findUnique, restaura um evento do banco de dados
- */
+
 export async function findUnique (id) {
     const res = await MySQL.event.findUnique({where: { id }, include: { address:{} }});
 
@@ -139,4 +123,24 @@ export async function findUnique (id) {
     return res;
 }
 
+  /**
+     * #################
+     * ##   FILTROS   ##
+     * #################
+     */
+
+
+export async function findName( title ) {
+
+    const res = await MySQL.event.findMany({where: { title }, include: { address:{} }});
+
+    await MySQL.$disconnect();
+    
+    res.map(e => {
+        e.startDate = dataTimeToString(e.startDate);
+        e.finalDate = dataTimeToString(e.finalDate);
+       })
+
+    return res;
+}
 
