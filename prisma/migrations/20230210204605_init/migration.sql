@@ -30,7 +30,6 @@ CREATE TABLE `events` (
     `status` BOOLEAN NOT NULL,
     `idUser` INTEGER NOT NULL,
 
-    UNIQUE INDEX `events_idUser_key`(`idUser`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -6,12 +6,12 @@ import { create, findMany, findManyMe, findUnique, update} from "./event-Reposit
  * /event:
  *   get:
  *     summary: "RESTAURA OS DADOS DE TODOS OS EVENTOS"
- *     description: O método GET que responde na url http://localhost:3000/event/all retornar todos os registros de eventos salvos no banco de dados.
+ *     description: O método GET que responde na url http://localhost:3000/event retornar todos os registros de eventos salvos no banco de dados.
  *     tags: 
  *       - "Event"
  * 
- *     operationId: findMany
- *     x-eov-operation-handler: event/me/all/routes 
+ *     operationId: findAll
+ *     x-eov-operation-handler: event/me/routes 
  * 
  *     responses:
  *        '200':
@@ -42,13 +42,12 @@ export async function findAll( req, res ) {
 }
 
 
-
 /**
  * @openapi
  * /event:
  *   post:
- *     summary: CRIAR UM NOVO EVENTO
- *     description: método post que responde na url http://localhost:3000/event  recebe no corpo da requisição as informações do evento e adiciona uma nova estância de evento no banco de dados 
+ *     summary: PERMITE AO MODERADOR ATUAL A CRIAR UM NOVO EVENTO 
+ *     description: método post que responde na url http://localhost:3000/event  recebe no corpo da requisição as informações do evento e adiciona uma nova estância de evento no banco de dados se a apermissão do usuário for de moderaor
  * 
  *     tags: 
  *       - "Event"
@@ -95,12 +94,12 @@ export async function newEvent( req, res ) {
  * @openapi
  * /event/me:
  *   get:
- *     summary: "RESTAURA OS DADOS DE TODOS OS EVENTOS DO MODERADOR ATUAL"
+ *     summary: "PERMITE AO MODERADOR ATUAL RESTAURAR OS DADOS DE TODOS OS EVENTOS"
  *     description: O método GET que responde na url http://localhost:3000/event/me retornar todos os registros de eventos salvos no banco de dados de um usuário.
  *     tags: 
  *       - "Event"
  * 
- *     operationId: findMany
+ *     operationId: findAllMe
  *     x-eov-operation-handler: event/me/routes 
  * 
  *     responses:
@@ -131,15 +130,25 @@ export async function findAllMe( req, res ) {
 
 /**
  * @openapi
- * /event/me/event:
+ * /event/me/event/{id}:
  *   get:
  *     summary: "RESTAURA OS DADOS DE UM EVENTO"
- *     description: O método GET que responde na url http://localhost:3000/event retornar os registros de um evento salvo no banco de dados.
+ *     description: O método GET que responde na url http://localhost:3000/event/me/event retornar os registros de um evento salvo no banco de dados.
+ *     
  *     tags: 
  *       - "Event"
  * 
+ * 
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *
+ *
  *     operationId: findEvent
- *     x-eov-operation-handler: event/routes 
+ *     x-eov-operation-handler: /event/me/event/{id}/routes 
  * 
  *     responses:
  *        '200':
@@ -150,30 +159,29 @@ export async function findAllMe( req, res ) {
  *                $ref: "#/components/schemas/Event"
  *              
  *        '404':
- *          $ref: '#/components/responses/NotFound'
- * 
- *     security:
- *        - JWT: []
- *          
+ *          $ref: '#/components/responses/NotFound'        
  * 
  */
 export async function findEvent( req, res ) {
-    const data = await findUnique();
+
+    const id = parseInt(req.params.id);
+    const data = await findUnique(id);
     return data ? res.send(data) : res.status(400).send({code: 400, message: "Bad Request"});
+
 }
 
 /**
  * @openapi
  * /event/me:
  *   put:
- *     summary: ATUALIZA UM EVENTO
- *     description: método PUT que responde na url http://localhost:3000/event  recebe no corpo da requisição as informações do evento e atualiza suas informações no banco de dados 
+ *     summary: PERMITE AO MODERADOR ATUAL ATUALIZAR UM EVENTO
+ *     description: método PUT que responde na url http://localhost:3000/event/me  recebe no corpo da requisição as informações do evento e atualiza suas informações no banco de dados 
  * 
  *     tags: 
  *       - "Event"
  * 
  *     operationId: updateEvent
- *     x-eov-operation-handler: event/routes
+ *     x-eov-operation-handler: event/me/routes
  * 
  *     requestBody:
  *       description: Atualizar Informações
@@ -214,14 +222,14 @@ export async function updateEvent( req, res ){
  * @openapi
  * /event/me:
  *   delete:
- *     summary: DELETA UM EVENTO
- *     description: método DELETE que responde na url http://localhost:3000/event  recebe no corpo da requisição O ID do evento e deleta suas informações no banco de dados 
+ *     summary: PERMITE AO MODERADOR ATUAL DELETA UM EVENTO
+ *     description: método DELETE que responde na url http://localhost:3000/event/me recebe no corpo da requisição O ID do evento e deleta suas informações no banco de dados 
  * 
  *     tags: 
  *       - "Event"
  * 
  *     operationId: deleteEvent
- *     x-eov-operation-handler: event/routes
+ *     x-eov-operation-handler: event/me/routes
  * 
  *     requestBody:
  *       description: Deleta as Informações de um evento

@@ -9,12 +9,12 @@ const eventMe = "/event/me"
 const eventMeEvent = "/event/me/event"
 
 router
-    .get(event, findAll)
+    .get(event, decodedToken, findAll)
     .post(event, decodedToken, newEvent)
     .get(eventMe, decodedToken, findAllMe)
     .put(eventMe, decodedToken, updateEvent)
-    .delete(eventMe, deleteEvent)
-    .get(eventMeEvent, findEvent)
+    .delete(eventMe, decodedToken, deleteEvent)
+    .get(eventMeEvent+"/:id", findEvent)
     
 
 

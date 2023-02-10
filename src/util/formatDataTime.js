@@ -34,5 +34,10 @@ export function stringToDataTime( arg ) {
 
 
 export function dateAfter ( arg ) {
-    //data for maior que a data atual 
+    if( arg > Date.now()){
+        return true;
+    }
+
+    return false;
 }
+

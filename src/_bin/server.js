@@ -24,6 +24,5 @@ if( !MySQL ){
     APP.listen(PORT, () => {
         console.log(`servidor ouvindo em: http://localhost:${PORT}`);
         console.log(`Documentação url: http://localhost:${PORT}`+"/api-docs");
-        console.log(`CONEXÃO OK: ${MySQL}`);
-    })
+    }) 
 }

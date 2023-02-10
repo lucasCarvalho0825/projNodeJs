@@ -2,8 +2,8 @@ import { MySQL } from "../../database/MySQL.js";
 
 
 /*
-    CREATE perfil assim que criamos um novo usuário
-    DELETE perfil assim que apagarmos o usuário
+    CREATE perfil  -> Create USER  (o perfil é gerado automaticamente assim que criamos um novo usuário)
+    DELETE perfil ->  Delete USER ( o perfil é apagado automaticamente assim que deletamos o usuário
 
 */ 
 
@@ -44,3 +44,4 @@ export async function findUnique( idUser ) {
     return data;
 
 }
+

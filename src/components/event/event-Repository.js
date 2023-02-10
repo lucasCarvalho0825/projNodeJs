@@ -18,11 +18,11 @@ MySQL.$use(async ( params, next) => {
  */
 export async function create (id, data) {
 
-    const { title, startDate, finalDate, description, address } = data;
+    const { title, startDate, finalDate, description, status, address } = data;
 
     const res =  await MySQL.event.create({
         data : {
-            title, startDate, finalDate, description, idUser: id,
+            title, startDate, finalDate, description, status, idUser: id,
             address : {
                 create : {
                     ...address
