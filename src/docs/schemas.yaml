@@ -114,6 +114,7 @@ components:
         username:
           type: string
           format: email
+          minLength: 5
         password:
           type: string
           format: password

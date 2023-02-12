@@ -1,4 +1,4 @@
-import { findMany, findUnique, findName, findStatus } from "./event-Repository.js";
+import { findMany, findUnique, findName } from "./event-Repository.js";
 
 
 /**

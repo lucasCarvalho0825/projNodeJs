@@ -19,7 +19,11 @@ import event from "../components/event/event-Router.js"
 const routes = (APP) => {
 
     APP.route("/").get((req, res) => {
-        res.status(200).send(`bem vindo a API`);
+        res.status(200).send(``);
+    })
+
+    APP.route('/infor').get((req, res) => {
+        res.status(200).send({ message: "Lucas carvalho, Stephany ...  e Matheus Kosak"})
     })
 
     APP.use(user, auth, profile, event)

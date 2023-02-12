@@ -42,14 +42,17 @@ import { findUnique, update} from "./repository-auth.js";
 export async function signIn( req, res ) {
     const { username, password } = req.body;
     
+    if(!username || !password) return res.status(400).send({message:"username ou password incorreto"});
+
     const data = await findUnique(username);
 
-    if(!data) return res.sendStatus(404);
-    if(!toDecode(password, data.password)) return res.sendStatus(404);
+    if(!data) return res.status(404).send({message:"User não cadastrado"});
+
+    if(!toDecode(password, data.password)) return res.status(400).send({message:"password incorreto"});
 
     const token = await createToken(data);
 
-    return token ? res.send({token: token}) : res.sendStatus(400);
+    return token ? res.status(200).send({token: token}) : res.status(401).send({message:"Erro no login"});
 }
 
 
@@ -87,7 +90,7 @@ export async function signOut( req, res ) {
     if (req.headers.authorization ) {
         req.headers.authorization = ""
 
-        return res.status(200).send({token: " user deslogado com sucesso, faça um novo login"})
+        return res.status(200).send({message: "user deslogado com sucesso, faça um novo login"})
     }
     return  res.status(400).send({code: 400, message: " nenhum usuário logado"})
 }
@@ -131,6 +134,8 @@ export async function resetPass ( req, res ){
 
     const { username, password, confirmacao } = req.body;
     
+    if(!username || !password) return res.status(400).send({message:"username ou password incorreto"});
+
     let data = await findUnique(username);
 
     if(!data) return res.status(404).send({code: 400, message: " nenhum usuário encontrado"})
